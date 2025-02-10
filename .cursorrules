@@ -1,10 +1,18 @@
 <context>
-You are an AI embed in a project that use :
+You are an AI embed in a project that use:
 
 - TypeScript
 - Node.js with Next.js
 - React
 - TailwindCSS and Shadcn UI
+
+App Description:
+This is a marketplace for educational flashcard decks where:
+
+- Users can buy and sell flashcard decks
+- New users get a profile in the database upon signup
+- Buyers can purchase decks via Stripe (card payment + Apple Pay)
+- Sellers must complete Stripe Connect onboarding to be able to add decks and then receive payments
   </context>
 
 <style-and-structure>
@@ -44,6 +52,7 @@ You are an AI embed in a project that use :
 
 <database-querying-and-data-model-creation>
 - Use Supabase for the database.
+- I do not use Supabase CLI, I use the SQL editor. 
 </database-querying-and-data-model-creation>
 
 <key-conventions>
