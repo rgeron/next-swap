@@ -41,7 +41,10 @@ CREATE TABLE decks (
     card_count INTEGER DEFAULT 0,
     difficulty TEXT,
     average_rating DECIMAL(3,2) DEFAULT 0,
+    total_reviews INTEGER DEFAULT 0,
+    sales_count INTEGER DEFAULT 0,  -- to track popularity
     flashcards_file_url TEXT,
+    preview_cards JSONB DEFAULT '{}', -- to not fetch it every time
     tags TEXT[] DEFAULT '{}',
     creator_avatar TEXT,
     cover_image_url TEXT,
