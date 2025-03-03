@@ -42,7 +42,7 @@ CREATE TABLE decks (
     difficulty TEXT,
     average_rating DECIMAL(3,2) DEFAULT 0,
     flashcards_file_url TEXT,
-    categories TEXT[] DEFAULT '{}',
+    tags TEXT[] DEFAULT '{}',
     creator_avatar TEXT,
     cover_image_url TEXT,
     report_count INTEGER DEFAULT 0,
