@@ -25,7 +25,7 @@ export default async function SellerLayout({
     .single();
 
   if (!profile) {
-    redirect("/auth/sign-in");
+    redirect("/sign-in");
   }
 
   // Check if user is a seller

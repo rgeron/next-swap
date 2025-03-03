@@ -22,7 +22,7 @@ export function SellerTopbar({ user, profile }: { user: User; profile: any }) {
   const handleSignOut = async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
-    router.push("/auth/sign-in");
+    router.push("/sign-in");
   };
 
   const initials = user.email?.split("@")[0].slice(0, 2).toUpperCase() || "??";

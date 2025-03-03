@@ -25,7 +25,7 @@ export default async function ProtectedLayout({
   if (!profile) {
     // Handle case where user exists but profile doesn't
     // This shouldn't happen with proper auth hooks, but just in case
-    redirect("/auth/sign-in");
+    redirect("/sign-in");
   }
 
   const isSeller = profile.is_seller && profile.sellers;

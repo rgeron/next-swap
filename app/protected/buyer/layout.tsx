@@ -1,4 +1,3 @@
-import { BuyerSidebar } from "@/components/dashboard/buyer-sidebar";
 import { BuyerTopbar } from "@/components/dashboard/buyer-topbar";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
@@ -25,14 +24,13 @@ export default async function BuyerLayout({
     .single();
 
   if (!profile) {
-    redirect("/auth/sign-in");
+    redirect("/sign-in");
   }
 
   const isSeller = profile.is_seller && profile.sellers;
 
   return (
     <>
-      <BuyerSidebar isSeller={isSeller} />
       <div className="flex-1 flex flex-col">
         <BuyerTopbar user={user} profile={profile} isSeller={isSeller} />
         <main className="flex-1 overflow-y-auto p-4 bg-blue-50">
