@@ -1,9 +1,9 @@
-import { Sidebar } from "@/components/dashboard/sidebar";
-import { Topbar } from "@/components/dashboard/topbar";
+import { SellerSidebar } from "@/components/dashboard/seller-sidebar";
+import { SellerTopbar } from "@/components/dashboard/seller-topbar";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
-export default async function ProtectedLayout({
+export default async function SellerLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ export default async function ProtectedLayout({
     redirect("/auth/sign-in");
   }
 
-  // Fetch user profile to determine if they're a seller
+  // Fetch user profile
   const { data: profile } = await supabase
     .from("profiles")
     .select("*, sellers(*)")
@@ -25,20 +25,26 @@ export default async function ProtectedLayout({
     .single();
 
   if (!profile) {
-    // Handle case where user exists but profile doesn't
-    // This shouldn't happen with proper auth hooks, but just in case
     redirect("/auth/sign-in");
   }
 
+  // Check if user is a seller
   const isSeller = profile.is_seller && profile.sellers;
 
+  if (!isSeller) {
+    // Redirect to seller onboarding if they're not a seller yet
+    redirect("/protected/buyer/become-seller");
+  }
+
   return (
-    <div className="flex h-screen">
-      <Sidebar />
+    <>
+      <SellerSidebar />
       <div className="flex-1 flex flex-col">
-        <Topbar user={user} />
-        <main className="flex-1 overflow-y-auto p-4">{children}</main>
+        <SellerTopbar user={user} profile={profile} />
+        <main className="flex-1 overflow-y-auto p-4 bg-emerald-50">
+          {children}
+        </main>
       </div>
-    </div>
+    </>
   );
 }

@@ -1,24 +1,16 @@
-import { createClient } from "@/utils/supabase/server";
-import { NextResponse } from "next/server";
+import { handleAuthCallbackAction } from "@/app/actions/auth";
+import { NextRequest } from "next/server";
 
-export async function GET(request: Request) {
-  // The `/auth/callback` route is required for the server-side auth flow implemented
-  // by the SSR package. It exchanges an auth code for the user's session.
-  // https://supabase.com/docs/guides/auth/server-side/nextjs
-  const requestUrl = new URL(request.url);
-  const code = requestUrl.searchParams.get("code");
-  const origin = requestUrl.origin;
-  const redirectTo = requestUrl.searchParams.get("redirect_to")?.toString();
+export async function GET(request: NextRequest) {
+  // Get the code from the URL
+  const searchParams = request.nextUrl.searchParams;
+  const code = searchParams.get("code");
+  const next = searchParams.get("next") || "/protected";
 
-  if (code) {
-    const supabase = await createClient();
-    await supabase.auth.exchangeCodeForSession(code);
+  if (!code) {
+    return new Response("No code provided", { status: 400 });
   }
 
-  if (redirectTo) {
-    return NextResponse.redirect(`${origin}${redirectTo}`);
-  }
-
-  // URL to redirect to after sign up process completes
-  return NextResponse.redirect(`${origin}/protected`);
+  // Handle the auth callback
+  return handleAuthCallbackAction(code, next);
 }
